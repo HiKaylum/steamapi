@@ -1,21 +1,23 @@
-import axios from 'Axios';
-
+import axios from 'axios';
+//TODO: Modify what headers we _exactly_ need
 const instance = axios.create({
-    baseURL: 'https://some-domain.com/api/',
     timeout: 1000,
-    headers: {'X-Custom-Header': 'foobar'}});
+    headers: {'X-Custom-Header': 'foobar',
+              'Access-Control-Allow-Origin': '*'
+             }});
 
 const RequestService = {
-
     getService: request => {
-        //fill in the data required to make a GET request to the STEAM API
-       console.log(instance);
-        console.log(request);
+       return instance.get(request.url, {
+            params:request.parameters
+        });
     },
+    //Not used all that much in the API - a max of about 10 functions use POST. Rest API? I think not. 
     postService: request => {
         //Fill in the data required to make a POST Request to the STEAM API. 
-        let sean = request;
-        console.log(sean);
+        return instance.post(request.url, {
+            params: request.parameters
+        })
     },
 };
 
